@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/lytix/modules/diary/db" VERSION="20220720" COMMENT="XMLDB file for Moodle local/lytix/modules/diary"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="lytix_diary_diary_entries" COMMENT="Default comment for the table, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of creation"/>
+        <FIELD NAME="deleted" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Flag to track if a entry got deleted or not."/>
+        <FIELD NAME="title" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Title of diary entry"/>
+        <FIELD NAME="startdate" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Startdate of diary entry"/>
+        <FIELD NAME="enddate" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Enddate of Diary"/>
+        <FIELD NAME="time_spend" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Time spend for this entry in minutes."/>
+        <FIELD NAME="eventid" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="id of the connected event"/>
+        <FIELD NAME="mstoneid" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="id of the connected milestone"/>
+        <FIELD NAME="do_read" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="What did I do? read"/>
+        <FIELD NAME="do_nodes" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="What did I do? took nodes"/>
+        <FIELD NAME="do_exercise" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="What did I do? solve exercises"/>
+        <FIELD NAME="do_information" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="What did I do? organized informations"/>
+        <FIELD NAME="do_reflected" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="What did I do? reflected"/>
+        <FIELD NAME="do_discuss_students" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="What did I do? discussed with other students"/>
+        <FIELD NAME="do_discuss_teacher" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="What did I do? discussed with the teaching staff"/>
+        <FIELD NAME="do_other" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="What did I do? other (if yes fill texfield)"/>
+        <FIELD NAME="do_other_text" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="What did I do? other text field"/>
+        <FIELD NAME="materials_slides" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Which materials did I use? course slides"/>
+        <FIELD NAME="materials_script" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Which materials did I use? course script"/>
+        <FIELD NAME="materials_exercise" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Which materials did I use? course exercises"/>
+        <FIELD NAME="materials_recommended" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Which materials did I use? recommended materials eg. books"/>
+        <FIELD NAME="materials_proposed" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Which materials did I use? other materials proposed by the teaching personal (if yes fill text)"/>
+        <FIELD NAME="materials_proposed_text" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Which materials did I use? text field for proposed materials"/>
+        <FIELD NAME="materials_found" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Which materials did I use? other that I found on my own (if yes fill text)"/>
+        <FIELD NAME="materials_found_text" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Which materials did I use? list of found materials"/>
+        <FIELD NAME="learned_text" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="What did I learn? What was new to me?"/>
+        <FIELD NAME="not_understand_text" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="What did I not understand? What was less comprehensive? Why?"/>
+        <FIELD NAME="goals_met" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="Did I met the goals that I set for this learning session? (if no, fill text)"/>
+        <FIELD NAME="goals_met_text" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Did I met the goals that I set for this learning session? (fill text why not)"/>
+        <FIELD NAME="different_next" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="What would I do differently next time?"/>
+        <FIELD NAME="goals" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
