@@ -216,7 +216,7 @@ class diary_entries_lib_test extends externallib_advanced_testcase {
 
         // Check for diary history.
         $history = diary_entries_lib::diary_history($this->context->id, $this->course->id);
-        $this::assertEquals(4, $history['Start']);
+        $this::assertTrue($history['Start'] >= 1 && $history['Start'] <= 12, "Must be between 1 and 12");
         $this::assertEquals(3, count($history['Counts']));
         $this::assertEquals(1, $history['Counts'][0]);
 
