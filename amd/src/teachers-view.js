@@ -19,7 +19,6 @@ export const init = (contextid, userid, courseid, locale) => {
                 counts: Array(length),
                 months: Array(length),
             };
-
         let highestCount = 0;
         for (let i = 0; i < length; ++i) {
             const currentCount = context.counts[i] = counts[i];
@@ -27,7 +26,6 @@ export const init = (contextid, userid, courseid, locale) => {
                 highestCount = currentCount;
             }
         }
-
         let monthIndex = data.Start - 1;
         const
             month = new Date(2022, monthIndex), // Arbitrary year, we only need the month name.

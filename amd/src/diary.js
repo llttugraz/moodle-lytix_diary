@@ -27,7 +27,6 @@ var diary = {
         var widget = document.getElementById('lytix_diary');
         widget.innerHTML = img + ' ' + diary.strings.loading_msg;
     },
-
     drawdiary: function() {
         var promises = Ajax.call([
             {
@@ -220,7 +219,6 @@ export const init = async (contextid, courseid, userid) => { // eslint-disable-l
     diary.contextid = contextid;
     diary.courseid = courseid;
     diary.userid = userid;
-
     diary.strings = await getStrings({
         lytix_diary: { // eslint-disable-line camelcase
             identical: [
