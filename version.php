@@ -32,6 +32,6 @@ $plugin->dependencies = [
     'lytix_helper' => ANY_VERSION,
     'lytix_logs' => ANY_VERSION
     ];
-$plugin->release   = 'v1.0.4';
+$plugin->release   = 'v1.0.5';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->supported = [401, 401];
