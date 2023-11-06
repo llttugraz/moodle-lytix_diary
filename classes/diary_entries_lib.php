@@ -56,16 +56,16 @@ class diary_entries_lib extends \external_api {
     public static function diary_get_returns() {
         return new \external_single_structure(
             [
-                'semStart' => new \external_value(PARAM_INT, 'CourseId'),
-                'semEnd' => new \external_value(PARAM_INT, 'CourseId'),
+                'semStart' => new \external_value(PARAM_INT, 'CourseId', VALUE_REQUIRED),
+                'semEnd' => new \external_value(PARAM_INT, 'CourseId'), VALUE_REQUIRED,
                 'entries' => new \external_multiple_structure(
                     new \external_single_structure(
                         [
                             'entry_id' => new \external_value(PARAM_INT, 'ID of entry', VALUE_REQUIRED),
                             'entry_title' => new \external_value(PARAM_TEXT, 'Title of entry', VALUE_REQUIRED),
                             'entry_date' => new \external_value(PARAM_TEXT, 'Date of entry', VALUE_REQUIRED),
-                        ], '', false
-                    )
+                        ], '', VALUE_OPTIONAL
+                    ), '', VALUE_OPTIONAL
                 ),
             ]
         );

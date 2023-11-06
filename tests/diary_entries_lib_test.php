@@ -28,9 +28,7 @@ namespace lytix_diary;
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-
-require_once($CFG->dirroot . '/webservice/tests/helpers.php');
-require_once($CFG->dirroot . '/lib/externallib.php');
+require_once("{$CFG->dirroot}/webservice/tests/helpers.php");
 
 use external_api;
 use externallib_advanced_testcase;
@@ -38,7 +36,8 @@ use lytix_helper\dummy;
 
 /**
  * Class diary_entries_lib_test
- * @group learners_corner
+ *
+ * @runTestsInSeparateProcesses
  * @coversDefaultClass \lytix_diary\diary_entries_lib
  */
 class diary_entries_lib_test extends externallib_advanced_testcase {
@@ -67,8 +66,9 @@ class diary_entries_lib_test extends externallib_advanced_testcase {
      * Setup called before any test case.
      */
     public function setUp(): void {
-        $this->resetAfterTest(true);
+        $this->resetAfterTest();
         $this->setAdminUser();
+        require_once("{$CFG->libdir}/externallib.php");
 
         $course            = new \stdClass();
         $course->fullname  = 'Diary Lib Test Course';
