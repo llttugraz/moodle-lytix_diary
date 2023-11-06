@@ -135,8 +135,8 @@ class diary_entries_lib extends \external_api {
     public static function diary_entry_parameters() {
         return new \external_function_parameters(
             array(
-                'contextid'    => new \external_value(PARAM_INT, 'The context id for the course'),
-                'jsonformdata' => new \external_value(PARAM_RAW, 'The data from the milestone form (json).')
+                'contextid'    => new \external_value(PARAM_INT, 'The context id for the course', VALUE_REQUIRED),
+                'jsonformdata' => new \external_value(PARAM_RAW, 'The data from the milestone form (json).', VALUE_REQUIRED)
             )
         );
     }
@@ -350,7 +350,7 @@ class diary_entries_lib extends \external_api {
                         'goals_met' => new \external_value(PARAM_BOOL, 'goals_met of entry', VALUE_REQUIRED),
                         'goals_met_text' => new \external_value(PARAM_TEXT, 'goals_met_text of entry', VALUE_REQUIRED),
                         'different_next' => new \external_value(PARAM_TEXT, 'different_next of entry', VALUE_REQUIRED),
-                    ], '', false
+                    ], '', VALUE_OPTIONAL
                 ),
             ]
         );
