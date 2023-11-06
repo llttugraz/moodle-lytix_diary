@@ -57,7 +57,7 @@ class diary_entries_lib extends \external_api {
         return new \external_single_structure(
             [
                 'semStart' => new \external_value(PARAM_INT, 'CourseId', VALUE_REQUIRED),
-                'semEnd' => new \external_value(PARAM_INT, 'CourseId'), VALUE_REQUIRED,
+                'semEnd' => new \external_value(PARAM_INT, 'CourseId', VALUE_REQUIRED),
                 'entries' => new \external_multiple_structure(
                     new \external_single_structure(
                         [
@@ -76,13 +76,13 @@ class diary_entries_lib extends \external_api {
      * @param int $contexid
      * @param int $courseid
      * @param int $userid
-     * @return mixed
+     * @return array
      * @throws \coding_exception
      * @throws \dml_exception
      * @throws \invalid_parameter_exception
      * @throws \restricted_context_exception
      */
-    public static function diary_get($contexid, $courseid, $userid) {
+    public static function diary_get(int $contexid, int $courseid, int $userid) : array {
         global $DB;
         $data['semStart'] = course_settings::getcoursestartdate($courseid)->getTimestamp();
         $data['semEnd']   = course_settings::getcourseenddate($courseid)->getTimestamp();
