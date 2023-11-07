@@ -34,4 +34,4 @@ $plugin->dependencies = [
     'lytix_logs' => ANY_VERSION
     ];
 $plugin->release   = 'v1.0.7';
-$plugin->supported = [401, 401];
+$plugin->supported = [401, 403];

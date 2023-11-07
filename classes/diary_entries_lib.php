@@ -56,16 +56,16 @@ class diary_entries_lib extends \external_api {
     public static function diary_get_returns() {
         return new \external_single_structure(
             [
-                'semStart' => new \external_value(PARAM_INT, 'CourseId'),
-                'semEnd' => new \external_value(PARAM_INT, 'CourseId'),
+                'semStart' => new \external_value(PARAM_INT, 'CourseId', VALUE_REQUIRED),
+                'semEnd' => new \external_value(PARAM_INT, 'CourseId', VALUE_REQUIRED),
                 'entries' => new \external_multiple_structure(
                     new \external_single_structure(
                         [
                             'entry_id' => new \external_value(PARAM_INT, 'ID of entry', VALUE_REQUIRED),
                             'entry_title' => new \external_value(PARAM_TEXT, 'Title of entry', VALUE_REQUIRED),
                             'entry_date' => new \external_value(PARAM_TEXT, 'Date of entry', VALUE_REQUIRED),
-                        ], '', false
-                    )
+                        ], '', VALUE_OPTIONAL
+                    ), '', VALUE_OPTIONAL
                 ),
             ]
         );
@@ -76,13 +76,13 @@ class diary_entries_lib extends \external_api {
      * @param int $contexid
      * @param int $courseid
      * @param int $userid
-     * @return mixed
+     * @return array
      * @throws \coding_exception
      * @throws \dml_exception
      * @throws \invalid_parameter_exception
      * @throws \restricted_context_exception
      */
-    public static function diary_get($contexid, $courseid, $userid) {
+    public static function diary_get(int $contexid, int $courseid, int $userid) : array {
         global $DB;
         $data['semStart'] = course_settings::getcoursestartdate($courseid)->getTimestamp();
         $data['semEnd']   = course_settings::getcourseenddate($courseid)->getTimestamp();
@@ -135,8 +135,8 @@ class diary_entries_lib extends \external_api {
     public static function diary_entry_parameters() {
         return new \external_function_parameters(
             array(
-                'contextid'    => new \external_value(PARAM_INT, 'The context id for the course'),
-                'jsonformdata' => new \external_value(PARAM_RAW, 'The data from the milestone form (json).')
+                'contextid'    => new \external_value(PARAM_INT, 'The context id for the course', VALUE_REQUIRED),
+                'jsonformdata' => new \external_value(PARAM_RAW, 'The data from the milestone form (json).', VALUE_REQUIRED)
             )
         );
     }
@@ -350,7 +350,7 @@ class diary_entries_lib extends \external_api {
                         'goals_met' => new \external_value(PARAM_BOOL, 'goals_met of entry', VALUE_REQUIRED),
                         'goals_met_text' => new \external_value(PARAM_TEXT, 'goals_met_text of entry', VALUE_REQUIRED),
                         'different_next' => new \external_value(PARAM_TEXT, 'different_next of entry', VALUE_REQUIRED),
-                    ], '', false
+                    ], '', VALUE_OPTIONAL
                 ),
             ]
         );
