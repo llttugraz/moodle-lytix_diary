@@ -27,6 +27,10 @@
  */
 
 namespace lytix_diary;
+defined('MOODLE_INTERNAL') || die();
+
+global $CFG;
+require_once("{$CFG->libdir}/externallib.php");
 
 use lytix_helper\course_settings;
 use lytix_logs\logger;
