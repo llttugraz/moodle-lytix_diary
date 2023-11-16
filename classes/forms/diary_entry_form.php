@@ -99,8 +99,8 @@ class diary_entry_form extends moodleform {
         $mform->addHelpButton('goals', 'goals', $component);
 
         // Planner.
-        $plugins = core_plugin_manager::instance()->get_plugins_of_type('planner');
-        if ($plugins) {
+        $plugin = core_plugin_manager::instance()->get_plugin_info('lytix_planner');
+        if ($plugin) {
             $mform->addElement('header', 'plannerhdr', get_string('planner', $component));
 
             $mform->addElement('html', '<h5>' . get_string('event_or_milestone', $component) . '</h5><br>');
