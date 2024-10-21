@@ -78,10 +78,10 @@ class diary_entry_form extends moodleform {
         $hours = $times['hours'];
         $minutes = $times['minutes'];
 
-        $timearray   = array();
+        $timearray   = [];
         $timearray[] =& $mform->createElement('select', 'hour', get_string('set_hour', $component), $hours);
         $timearray[] =& $mform->createElement('select', 'minute', get_string('set_minute', $component), $minutes);
-        $mform->addGroup($timearray, 'endtime', get_string('set_endtime', $component), array(' '), false);
+        $mform->addGroup($timearray, 'endtime', get_string('set_endtime', $component), [' '], false);
         $mform->addHelpButton('endtime', 'set_endtime', $component);
         form_helper::set_enddate($mform, 'startdate', '', $this->_customdata['enddate']);
 
@@ -94,7 +94,7 @@ class diary_entry_form extends moodleform {
         }
         $mform->disabledIf('time_spend', '' , true);
 
-        $mform->addElement('text', 'goals', get_string('goals', $component), array('size' => '80'));
+        $mform->addElement('text', 'goals', get_string('goals', $component), ['size' => '80']);
         $mform->setDefault('goals', $this->_customdata['goals']);
         $mform->addHelpButton('goals', 'goals', $component);
 
@@ -156,7 +156,7 @@ class diary_entry_form extends moodleform {
         $mform->setDefault('do_other', $this->_customdata['do_other']);
         $mform->addHelpButton('do_other', 'diary_other', $component);
 
-        $mform->addElement('text', 'do_other_text', get_string('diary_other_text', $component), array('size' => '80'));
+        $mform->addElement('text', 'do_other_text', get_string('diary_other_text', $component), ['size' => '80']);
         $mform->setDefault('do_other_text', $this->_customdata['do_other_text']);
         $mform->disabledIf('do_other_text', 'do_other', 'notchecked');
 
@@ -181,7 +181,7 @@ class diary_entry_form extends moodleform {
         $mform->setDefault('materials_proposed', $this->_customdata['materials_proposed']);
         $mform->addHelpButton('materials_proposed', 'diary_proposed', $component);
 
-        $mform->addElement('text', 'materials_proposed_text', get_string('diary_proposed_text', $component), array('size' => '80'));
+        $mform->addElement('text', 'materials_proposed_text', get_string('diary_proposed_text', $component), ['size' => '80']);
         $mform->setDefault('materials_proposed_text', $this->_customdata['materials_proposed_text']);
         $mform->disabledIf('materials_proposed_text', 'materials_proposed', 'notchecked');
 
@@ -191,35 +191,35 @@ class diary_entry_form extends moodleform {
 
         // TODO Beschreibung mit Linksymbol hinzufügen.
         $mform->addElement('editor', 'materials_found_text', get_string('diary_found_text', $component),
-            array('size' => '80'), array('autosave' => 0, 'enable_filemanagement' => 0));
-        $mform->setDefault('materials_found_text', array('text' => $this->_customdata['materials_found_text']));
+            ['size' => '80'], ['autosave' => 0, 'enable_filemanagement' => 0]);
+        $mform->setDefault('materials_found_text', ['text' => $this->_customdata['materials_found_text']]);
         $mform->disabledIf('materials_found_text', 'materials_found', 'notchecked');
         $mform->setType('materials_found_text', PARAM_CLEANHTML);
 
         // Results.
         $mform->addElement('header', 'resultshdr', get_string('selfreflection', $component));
 
-        $mform->addElement('text', 'learned_text', get_string('diary_learned_text', $component), array('size' => '80'));
+        $mform->addElement('text', 'learned_text', get_string('diary_learned_text', $component), ['size' => '80']);
         $mform->setDefault('learned_text', $this->_customdata['learned_text']);
 
         $mform->addElement('text', 'not_understand_text', get_string('diary_not_understand_text', $component),
-            array('size' => '80'));
+            ['size' => '80']);
         $mform->setDefault('not_understand_text', $this->_customdata['not_understand_text']);
 
-        $choices = array(
+        $choices = [
             0 => get_string('no'),
             1 => get_string('yes'),
-        );
+        ];
         $mform->addElement('select', 'goals_met', get_string('diary_goals_met', $component), $choices);
         $mform->setDefault('goals_met', $this->_customdata['goals_met']);
         $mform->addHelpButton('goals_met', 'diary_goals_met', $component);
 
-        $mform->addElement('text', 'goals_met_text', get_string('diary_goals_met_text', $component), array('size' => '80'));
+        $mform->addElement('text', 'goals_met_text', get_string('diary_goals_met_text', $component), ['size' => '80']);
         $mform->setDefault('goals_met_text', $this->_customdata['goals_met_text']);
         $mform->addHelpButton('goals_met_text', 'diary_goals_met_text', $component);
         $mform->disabledIf('goals_met_text', 'goals_met', 'eq', '1');
 
-        $mform->addElement('text', 'different_next', get_string('diary_next', $component), array('size' => '80'));
+        $mform->addElement('text', 'different_next', get_string('diary_next', $component), ['size' => '80']);
         $mform->setDefault('different_next', $this->_customdata['different_next']);
     }
 }
