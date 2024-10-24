@@ -32,7 +32,6 @@ $plugin->component = 'lytix_diary'; // Full name of the plugin.
 $plugin->dependencies = [
     'lytix_helper' => ANY_VERSION,
     'lytix_logs' => ANY_VERSION,
-    'lytix_config' => ANY_VERSION,
 ];
 $plugin->release   = 'v1.1.0';
 $plugin->supported = [401, 405];
