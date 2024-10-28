@@ -12,10 +12,13 @@ The `lytix_diary` plugin provides a feature within Moodle where students can con
 
 ## Requirements
 
-- Moodle Version: 4.1+
-- PHP Version: 7.4+
+- Supported Moodle Version: 4.1 - 4.5
+- Supported PHP Version:    7.4 - 8.2
 - Supported Databases: MariaDB, PostgreSQL
 - Supported Moodle Themes: Boost
+
+This plugin has only been tested under the above system requirements against the specified versions.
+However, it may work under other system requirements and versions as well.
 
 ## Features
 
