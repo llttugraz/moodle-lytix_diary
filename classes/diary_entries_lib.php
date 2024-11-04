@@ -449,16 +449,31 @@ class diary_entries_lib extends \external_api {
 
         $start = course_settings::getcoursestartdate($courseid);
         $tmp = course_settings::getcoursestartdate($courseid);
+
         $end = new \DateTime("now");
         $intervals = [];
 
         while ($tmp->getTimestamp() < $end->getTimestamp()) {
             $month = new \stdClass();
-            $month->start = strtotime('first day of this month', $tmp->getTimestamp());
-            $month->end = strtotime('last day of this month', $tmp->getTimestamp());
+
+            $firstdayofmonth = strtotime('first day of this month', $tmp->getTimestamp());
+            $firstdayofmonthfirstsecond = new \DateTime();
+            $firstdayofmonthfirstsecond->setTimestamp($firstdayofmonth);
+            $firstdayofmonthfirstsecond->setTime(0, 0, 1);
+            $month->start = $firstdayofmonthfirstsecond->getTimestamp();
+
+            $lastdayofmonth = strtotime('last day of this month', $tmp->getTimestamp());
+            $lastdayofmonthlastsecond = new \DateTime();
+            $lastdayofmonthlastsecond->setTimestamp($lastdayofmonth);
+            $lastdayofmonthlastsecond->setTime(23, 59, 59);
+            $month->end = $lastdayofmonthlastsecond->getTimestamp();
+
             $intervals[] = $month;
 
-            $tmp->modify("+ 1 month");
+            $nextdate = new \DateTime();
+            $nextdate->setTimestamp($month->end);
+            date_add($nextdate, date_interval_create_from_date_string("5 hours"));
+            $tmp = $nextdate;
         }
 
         $counts = [];
