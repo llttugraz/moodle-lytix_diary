@@ -86,16 +86,16 @@ class diary_entries_lib extends \external_api {
      * @throws \invalid_parameter_exception
      * @throws \restricted_context_exception
      */
-    public static function diary_get(int $contexid, int $courseid, int $userid) : array {
+    public static function diary_get(int $contexid, int $courseid, int $userid): array {
         global $DB;
         $data['semStart'] = course_settings::getcoursestartdate($courseid)->getTimestamp();
         $data['semEnd']   = course_settings::getcourseenddate($courseid)->getTimestamp();
-        $data['entries'] = array();
+        $data['entries'] = [];
 
         $params  = self::validate_parameters(self::diary_get_parameters(), [
             'contextid' => $contexid,
             'courseid' => $courseid,
-            'userid' => $userid
+            'userid' => $userid,
         ]);
 
         // We always must call validate_context in a webservice.
@@ -105,7 +105,7 @@ class diary_entries_lib extends \external_api {
         if (!$DB->record_exists('lytix_diary_diary_entries', [
             'courseid' => $params['courseid'],
             'userid' => $params['userid'],
-            'deleted' => 0
+            'deleted' => 0,
         ])) {
             return $data;
         }
@@ -114,7 +114,7 @@ class diary_entries_lib extends \external_api {
             [
                 'courseid' => $params['courseid'],
                 'userid' => $params['userid'],
-                'deleted' => 0
+                'deleted' => 0,
             ], 'startdate');
 
         $entries = [];
@@ -138,10 +138,10 @@ class diary_entries_lib extends \external_api {
      */
     public static function diary_entry_parameters() {
         return new \external_function_parameters(
-            array(
+            [
                 'contextid'    => new \external_value(PARAM_INT, 'The context id for the course', VALUE_REQUIRED),
-                'jsonformdata' => new \external_value(PARAM_RAW, 'The data from the milestone form (json).', VALUE_REQUIRED)
-            )
+                'jsonformdata' => new \external_value(PARAM_RAW, 'The data from the milestone form (json).', VALUE_REQUIRED),
+            ]
         );
     }
 
@@ -152,7 +152,7 @@ class diary_entries_lib extends \external_api {
     public static function diary_entry_returns() {
         return new \external_single_structure(
             [
-                'success' => new \external_value(PARAM_BOOL, 'Diary entry updated / inserted', VALUE_REQUIRED)
+                'success' => new \external_value(PARAM_BOOL, 'Diary entry updated / inserted', VALUE_REQUIRED),
             ]
         );
     }
@@ -174,14 +174,14 @@ class diary_entries_lib extends \external_api {
 
         $params  = self::validate_parameters(self::diary_entry_parameters(), [
             'contextid' => $contextid,
-            'jsonformdata' => $jsonformdata
+            'jsonformdata' => $jsonformdata,
         ]);
 
         // We always must call validate_context in a webservice.
         $context = \context::instance_by_id($params['contextid'], MUST_EXIST);
         self::validate_context($context);
 
-        $record = array();
+        $record = [];
         $serialiseddata = json_decode($params['jsonformdata']);
         parse_str($serialiseddata, $record);
 
@@ -249,7 +249,7 @@ class diary_entries_lib extends \external_api {
     public static function diary_delete_entry_returns() {
         return new \external_single_structure(
             [
-                'success' => new \external_value(PARAM_BOOL, 'Milestone updated / inserted', VALUE_REQUIRED)
+                'success' => new \external_value(PARAM_BOOL, 'Milestone updated / inserted', VALUE_REQUIRED),
             ]
         );
     }
@@ -273,7 +273,7 @@ class diary_entries_lib extends \external_api {
             'contextid' => $contexid,
             'courseid' => $courseid,
             'userid' => $userid,
-            'id' => $id
+            'id' => $id,
         ]);
 
         // We always must call validate_context in a webservice.
@@ -379,7 +379,7 @@ class diary_entries_lib extends \external_api {
             'contextid' => $contexid,
             'courseid' => $courseid,
             'userid' => $userid,
-            'id' => $id
+            'id' => $id,
         ]);
 
         // We always must call validate_context in a webservice.
@@ -391,7 +391,7 @@ class diary_entries_lib extends \external_api {
         $record = $DB->get_record('lytix_diary_diary_entries', [
             'id' => $params['id'],
             'courseid' => $params['courseid'],
-            'userid' => $params['userid']
+            'userid' => $params['userid'],
         ]);
         $data['entry'] = ($record != false) ? $record : [];
         return $data;
@@ -420,7 +420,7 @@ class diary_entries_lib extends \external_api {
                 'Start' => new \external_value(PARAM_INT, 'Startmonth', VALUE_REQUIRED),
                 'Counts' => new \external_multiple_structure(
                     new \external_value(PARAM_INT, 'Entries for this month', VALUE_OPTIONAL)
-                )
+                ),
             ]
         );
     }
@@ -449,16 +449,31 @@ class diary_entries_lib extends \external_api {
 
         $start = course_settings::getcoursestartdate($courseid);
         $tmp = course_settings::getcoursestartdate($courseid);
+
         $end = new \DateTime("now");
         $intervals = [];
 
         while ($tmp->getTimestamp() < $end->getTimestamp()) {
             $month = new \stdClass();
-            $month->start = strtotime('first day of this month', $tmp->getTimestamp());
-            $month->end = strtotime('last day of this month', $tmp->getTimestamp());
+
+            $firstdayofmonth = strtotime('first day of this month', $tmp->getTimestamp());
+            $firstdayofmonthfirstsecond = new \DateTime();
+            $firstdayofmonthfirstsecond->setTimestamp($firstdayofmonth);
+            $firstdayofmonthfirstsecond->setTime(0, 0, 1);
+            $month->start = $firstdayofmonthfirstsecond->getTimestamp();
+
+            $lastdayofmonth = strtotime('last day of this month', $tmp->getTimestamp());
+            $lastdayofmonthlastsecond = new \DateTime();
+            $lastdayofmonthlastsecond->setTimestamp($lastdayofmonth);
+            $lastdayofmonthlastsecond->setTime(23, 59, 59);
+            $month->end = $lastdayofmonthlastsecond->getTimestamp();
+
             $intervals[] = $month;
 
-            $tmp->modify("+ 1 month");
+            $nextdate = new \DateTime();
+            $nextdate->setTimestamp($month->end);
+            date_add($nextdate, date_interval_create_from_date_string("5 hours"));
+            $tmp = $nextdate;
         }
 
         $counts = [];
@@ -469,7 +484,7 @@ class diary_entries_lib extends \external_api {
             $params = [
                 'courseid' => $courseid,
                 'start' => $interval->start,
-                'end' => $interval->end
+                'end' => $interval->end,
             ];
             $count = $DB->count_records_sql($sql, $params);
             $counts[] = $count;
@@ -477,7 +492,7 @@ class diary_entries_lib extends \external_api {
 
         return [
             'Start' => (int)$start->format('m'),
-            'Counts' => array_reverse($counts)
+            'Counts' => array_reverse($counts),
         ];
     }
 }

@@ -40,7 +40,7 @@ require_once("{$CFG->dirroot}/webservice/tests/helpers.php");
  * @runTestsInSeparateProcesses
  * @coversDefaultClass \lytix_diary\diary_entries_lib
  */
-class diary_entries_lib_test extends externallib_advanced_testcase {
+final class diary_entries_lib_test extends externallib_advanced_testcase {
     /**
      * Variable for course.
      *
@@ -66,6 +66,7 @@ class diary_entries_lib_test extends externallib_advanced_testcase {
      * Setup called before any test case.
      */
     public function setUp(): void {
+        parent::setUp();
         $this->resetAfterTest();
         $this->setAdminUser();
         global $CFG;
@@ -106,7 +107,7 @@ class diary_entries_lib_test extends externallib_advanced_testcase {
      * @throws \invalid_parameter_exception
      * @throws \restricted_context_exception
      */
-    public function test_empty_diary() {
+    public function test_empty_diary(): void {
         $return = diary_entries_lib::diary_get($this->context->id, $this->course->id, get_admin()->id);
         try {
             external_api::clean_returnvalue(diary_entries_lib::diary_get_returns(), $return);
@@ -155,7 +156,8 @@ class diary_entries_lib_test extends externallib_advanced_testcase {
      * @throws \invalid_response_exception
      * @throws \restricted_context_exception
      */
-    public function test_diary_entry() {
+    public function test_diary_entry(): void {
+        global $DB;
         $diarydate = new \DateTime('now');
         $diarydate->setTime($diarydate->format('G'), $diarydate->format('i'), 00);
         $diaryenddate = new \DateTime('now');
@@ -222,5 +224,10 @@ class diary_entries_lib_test extends externallib_advanced_testcase {
         $this::assertEquals(1, $history['Counts'][0]);
 
         external_api::clean_returnvalue(diary_entries_lib::diary_history_returns(), $history);
+
+        // Update 2024-11-05: This test is extended for cleanup (implemented in local_lytix).
+        $this::assertEquals(1, count($DB->get_records('lytix_diary_diary_entries')));
+        delete_course($this->course->id, false);
+        $this::assertEquals(0, count($DB->get_records('lytix_diary_diary_entries')));
     }
 }

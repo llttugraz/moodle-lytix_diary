@@ -22,7 +22,13 @@ var diary = {
     semEnd: null,
 
     drawLoading: function() {
-        var img = '<img src="../../../pix/i/loading.gif" ' +
+        var imgtype;
+        if (Number(M.cfg.version) < 2024042200) {
+            imgtype = "gif";
+        } else {
+            imgtype = "svg";
+        }
+        const img = '<img src="../../../pix/i/loading.' + imgtype + '" ' +
             'alt="LoadingImage" style="width:48px;height:48px;">';
         var widget = document.getElementById('lytix_diary');
         widget.innerHTML = img + ' ' + diary.strings.loading_msg;

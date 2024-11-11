@@ -30,43 +30,43 @@
 defined('MOODLE_INTERNAL') || die();
 
 // We defined the web service functions to install.
-$functions = array(
-    'local_lytix_lytix_diary_get'                          => array(
+$functions = [
+    'local_lytix_lytix_diary_get'                          => [
         'classname'   => 'lytix_diary\\diary_entries_lib',
         'methodname'  => 'diary_get',
         'description' => 'Provides data for the diary widget',
         'type'        => 'read',
-        'ajax'        => 'true'
-    ),
-    'local_lytix_lytix_diary_entry'                        => array(
+        'ajax'        => 'true',
+    ],
+    'local_lytix_lytix_diary_entry'                        => [
         'classname'   => 'lytix_diary\\diary_entries_lib',
         'methodname'  => 'diary_entry',
         'description' => 'Adds or edits an entry for the diary widget. Created by the student',
         'type'        => 'write',
-        'ajax'        => 'true'
-    ),
-    'local_lytix_lytix_diary_entry_get'                    => array(
+        'ajax'        => 'true',
+    ],
+    'local_lytix_lytix_diary_entry_get'                    => [
         'classname'   => 'lytix_diary\\diary_entries_lib',
         'methodname'  => 'diary_entry_get',
         'description' => 'Returns the entry data for the diary edit modal.',
         'type'        => 'write',
-        'ajax'        => 'true'
-    ),
-    'local_lytix_lytix_diary_delete_entry'                 => array(
+        'ajax'        => 'true',
+    ],
+    'local_lytix_lytix_diary_delete_entry'                 => [
         'classname'   => 'lytix_diary\\diary_entries_lib',
         'methodname'  => 'diary_delete_entry',
         'description' => 'Deletes an entry of the diary widget',
         'type'        => 'write',
-        'ajax'        => 'true'
-    ),
-    'local_lytix_lytix_diary_history'                 => array(
+        'ajax'        => 'true',
+    ],
+    'local_lytix_lytix_diary_history'                 => [
         'classname'   => 'lytix_diary\\diary_entries_lib',
         'methodname'  => 'diary_history',
         'description' => 'Deletes an entry of the diary widget',
         'type'        => 'write',
-        'ajax'        => 'true'
-    ),
-);
+        'ajax'        => 'true',
+    ],
+];
 
 
 
