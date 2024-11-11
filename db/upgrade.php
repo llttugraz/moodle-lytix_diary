@@ -74,5 +74,19 @@ function xmldb_lytix_diary_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2022092100, 'lytix', 'diary');
     }
 
+    if ($oldversion < 2024111100) {
+        global $DB;
+        // Delete deleted users from table 'lytix_diary_diary_entries'.
+        $DB->delete_records_select('lytix_diary_diary_entries',
+                'userid IN (SELECT id FROM  {user} WHERE deleted = 1)');
+
+        // Delete non-existing courses from table 'lytix_diary_diary_entries'.
+        $DB->delete_records_select('lytix_diary_diary_entries',
+                'courseid NOT IN (SELECT id FROM  {course})');
+
+        // Coursepolicy savepoint reached.
+        upgrade_plugin_savepoint(true, 2024111100, 'lytix', 'diary');
+    }
+
     return true;
 }
