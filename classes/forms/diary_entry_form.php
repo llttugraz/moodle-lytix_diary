@@ -60,18 +60,16 @@ class diary_entry_form extends moodleform {
 
         $mform->addElement('text', 'title', get_string('diary_title', $component));
         $mform->setDefault('title', $this->_customdata['title']);
-        $mform->addHelpButton('title', 'diary_title', $component);
         $mform->addRule('title', get_string('required', $component), 'required', null, 'client');
 
         $startyear = forms_helper::get_semester_start_year();
         $stopyear = forms_helper::get_semester_end_year();
 
-        $mform->addElement('date_time_selector', 'startdate', get_string('entry_date', $component),
+        $mform->addElement('date_time_selector', 'startdate', get_string('diary_date', $component),
             ['startyear' => $startyear,
                 'stopyear'  => $stopyear,
                 'timezone'  => 99, 'optional' => false]);
         $mform->setDefault('startdate', $this->_customdata['startdate']);
-        $mform->addHelpButton('startdate', 'entry_date', $component);
 
         $times = form_helper::get_hours_minutes_array();
 
@@ -82,7 +80,6 @@ class diary_entry_form extends moodleform {
         $timearray[] =& $mform->createElement('select', 'hour', get_string('set_hour', $component), $hours);
         $timearray[] =& $mform->createElement('select', 'minute', get_string('set_minute', $component), $minutes);
         $mform->addGroup($timearray, 'endtime', get_string('set_endtime', $component), [' '], false);
-        $mform->addHelpButton('endtime', 'set_endtime', $component);
         form_helper::set_enddate($mform, 'startdate', '', $this->_customdata['enddate']);
 
         $mform->addElement('text', 'time_spend', get_string('time_spend', $component));
@@ -212,11 +209,9 @@ class diary_entry_form extends moodleform {
         ];
         $mform->addElement('select', 'goals_met', get_string('diary_goals_met', $component), $choices);
         $mform->setDefault('goals_met', $this->_customdata['goals_met']);
-        $mform->addHelpButton('goals_met', 'diary_goals_met', $component);
 
         $mform->addElement('text', 'goals_met_text', get_string('diary_goals_met_text', $component), ['size' => '80']);
         $mform->setDefault('goals_met_text', $this->_customdata['goals_met_text']);
-        $mform->addHelpButton('goals_met_text', 'diary_goals_met_text', $component);
         $mform->disabledIf('goals_met_text', 'goals_met', 'eq', '1');
 
         $mform->addElement('text', 'different_next', get_string('diary_next', $component), ['size' => '80']);
