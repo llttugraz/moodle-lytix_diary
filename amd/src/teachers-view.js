@@ -35,7 +35,6 @@ export const init = (contextid, userid, courseid, locale) => {
             context.months[i] = format(month);
             month.setMonth(++monthIndex % 12);
         }
-        context.months.shift(); // Remove first entry because it is replaced by ‘today’ in the template.
 
         return Templates.render('lytix_diary/teachers-view', context);
     })
